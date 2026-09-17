@@ -140,7 +140,7 @@ st.divider()
 col_a, col_b = st.columns(2)
 
 with col_a:
-    top10 = df_filtre.groupby("Pays")["Conso_Litres"].mean().sort_values(ascending=False).head(10).reset_index().sort_values("Conso_Litres", ascending=True)
+    top10 = df_filtre.groupby("Pays")["Conso_Litres"].mean().sort_values(ascending=False).head(25).reset_index().sort_values("Conso_Litres", ascending=True)
     fig1 = px.bar(top10, x="Conso_Litres", y="Pays", orientation="h",
                   title="Top 10 pays consommateurs",
                   color="Conso_Litres", color_continuous_scale="Oranges")
