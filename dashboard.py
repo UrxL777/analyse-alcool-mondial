@@ -69,11 +69,17 @@ annee_min, annee_max = st.sidebar.slider("Période",
                                           max_value=int(cg["Annees"].max()),
                                           value=(2000, 2022))
 
+pays_list = ["Tous"] + sorted(cg["Pays"].unique().tolist())
+pays_selectionne = st.sidebar.selectbox("Pays", pays_list)
+
 # Appliquer les filtres
 if region_selectionnee == "Toutes":
     df_filtre = cg[(cg["Annees"] >= annee_min) & (cg["Annees"] <= annee_max)]
 else:
     df_filtre = cg[(cg["Annees"] >= annee_min) & (cg["Annees"] <= annee_max) & (cg["Regions"] == region_selectionnee)]
+
+if pays_selectionne != "Tous":
+    df_filtre = df_filtre[df_filtre["Pays"] == pays_selectionne]
 
 # KPIs
 st.subheader("Indicateurs Clés")
@@ -149,9 +155,9 @@ st.divider()
 st.subheader("Évolution Temporelle")
 
 annees = df_filtre.groupby("Annees")["Conso_Litres"].mean().reset_index()
-fig3 = px.line(annees, x="Annees", y="Conso_Litres",
+fig3 = px.area(annees, x="Annees", y="Conso_Litres",
                title="Évolution mondiale de la consommation d'alcool",
-               markers=True)
+               color_discrete_sequence=["#F4A300"], markers=True)
 fig3.update_xaxes(dtick=1)
 st.plotly_chart(fig3, use_container_width=True)
 
