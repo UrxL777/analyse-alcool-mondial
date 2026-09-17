@@ -71,6 +71,13 @@ annee_min, annee_max = st.sidebar.slider("Période",
 pays_list = ["Tous"] + sorted(cg[cg["Regions"] == region_selectionnee]["Pays"].unique().tolist()) if region_selectionnee != "Toutes" else ["Tous"] + sorted(cg["Pays"].unique().tolist())
 pays_selectionne = st.sidebar.selectbox("Pays", pays_list)
 
+# Infos automatiques quand un pays est sélectionné
+if pays_selectionne != "Tous":
+    region_auto = cg[cg["Pays"] == pays_selectionne]["Regions"].values[0]
+    annees_dispo = cg[cg["Pays"] == pays_selectionne]["Annees"]
+    st.sidebar.info(f"Région : {region_auto}")
+    st.sidebar.info(f"Années disponibles : {int(annees_dispo.min())} - {int(annees_dispo.max())}")
+
 # Appliquer les filtres
 if region_selectionnee == "Toutes":
     df_filtre = cg[(cg["Annees"] >= annee_min) & (cg["Annees"] <= annee_max)]
