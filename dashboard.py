@@ -4,7 +4,6 @@ import plotly.express as px
 
 st.set_page_config(
     page_title="Analyse Mondiale de la Consommation d'Alcool",
-    page_icon="📊",
     layout="wide"
 )
 
