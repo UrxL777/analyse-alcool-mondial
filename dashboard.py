@@ -68,7 +68,7 @@ annee_min, annee_max = st.sidebar.slider("Période",
                                           max_value=int(cg["Annees"].max()),
                                           value=(2000, 2022))
 
-pays_list = ["Tous"] + sorted(cg["Pays"].unique().tolist())
+pays_list = ["Tous"] + sorted(cg[cg["Regions"] == region_selectionnee]["Pays"].unique().tolist()) if region_selectionnee != "Toutes" else ["Tous"] + sorted(cg["Pays"].unique().tolist())
 pays_selectionne = st.sidebar.selectbox("Pays", pays_list)
 
 # Appliquer les filtres
